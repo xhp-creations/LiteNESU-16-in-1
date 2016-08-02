@@ -1,36 +1,38 @@
+#include <gctypes.h>
+
 #ifndef COMMON_H
-#define	COMMON_H
+#define COMMON_H
 
-#ifdef __cplusplus
-extern "C" {
+typedef uint8_t byte;
+typedef uint16_t word;
+typedef uint32_t dword;
+typedef uint64_t qword;
+
+// Binary Operations
+bool common_bit_set(long long value, byte position);
+
+// Byte Bit Operations
+void common_set_bitb(byte *variable, byte position);
+void common_unset_bitb(byte *variable, byte position);
+void common_toggle_bitb(byte *variable, byte position);
+void common_modify_bitb(byte *variable, byte position, bool set);
+
+// Word Bit Operations
+void common_set_bitw(word *variable, byte position);
+void common_unset_bitw(word *variable, byte position);
+void common_toggle_bitw(word *variable, byte position);
+void common_modify_bitw(word *variable, byte position, bool set);
+
+// Double Word Bit Operations
+void common_set_bitd(dword *variable, byte position);
+void common_unset_bitd(dword *variable, byte position);
+void common_toggle_bitd(dword *variable, byte position);
+void common_modify_bitd(dword *variable, byte position, bool set);
+
+// Quad Word Bit Operations
+void common_set_bitq(qword *variable, byte position);
+void common_unset_bitq(qword *variable, byte position);
+void common_toggle_bitq(qword *variable, byte position);
+void common_modify_bitq(qword *variable, byte position, bool set);
+
 #endif
-
-#include "os_defs.h"
-
-#define CAFE_OS_SD_PATH             "/vol/external01"
-#define SD_PATH                     "sd:"
-#define WIIU_PATH                   "/wiiu"
-
-#ifndef MEM_BASE
-#define MEM_BASE                    (0x00800000)
-#endif
-
-#define ELF_DATA_ADDR               (*(volatile unsigned int*)(MEM_BASE + 0x1300 + 0x00))
-#define ELF_DATA_SIZE               (*(volatile unsigned int*)(MEM_BASE + 0x1300 + 0x04))
-#define MAIN_ENTRY_ADDR             (*(volatile unsigned int*)(MEM_BASE + 0x1400 + 0x00))
-#define OS_FIRMWARE                 (*(volatile unsigned int*)(MEM_BASE + 0x1400 + 0x04))
-
-#define OS_SPECIFICS                ((OsSpecifics*)(MEM_BASE + 0x1500))
-
-#ifndef EXIT_SUCCESS
-#define EXIT_SUCCESS                0
-#endif
-#define EXIT_HBL_EXIT               0xFFFFFFFE
-#define EXIT_RELAUNCH_ON_LOAD       0xFFFFFFFD
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif	/* COMMON_H */
-

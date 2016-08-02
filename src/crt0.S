@@ -1,4 +1,3 @@
-
 .extern _memset
 .extern _doInit
 .extern _main

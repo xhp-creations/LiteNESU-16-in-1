@@ -1,40 +1,34 @@
-OUTPUT(snake.elf);
+OUTPUT_FORMAT("elf32-powerpc")
+OUTPUT_ARCH(powerpc:common)
 
-/* Tell linker where our application entry is so the garbage collect can work correct */
-ENTRY(__entry_menu);
+ENTRY(_start)
 
 SECTIONS {
-	. = 0x00802000;
-	.text : {
-		*(.text*);
-	}
-	.rodata : {
-		*(.rodata*);
-	}
-	.data : {
-		*(.data*);
+	. = 0x01808000;
 
-		__sdata_start = .;
-		*(.sdata*);
-		__sdata_end = .;
+	__rx_start = .;
 
-		__sdata2_start = .;
-		*(.sdata2*);
-		__sdata2_end = .;
-	}
-	.bss : {
-		__bss_start = .;
-		*(.bss*);
-		*(.sbss*);
-		*(COMMON);
-		__bss_end = .;
-	}
-	__CODE_END = .;
+	.start : { crt0.o(*) }
+	.text : { *(.text) }
+	.rodata : { *(.rodata .rodata.*)}
 
-	/DISCARD/ : {
-		*(*);
+	__rx_end = .;
+
+	. = 0xF4C00000;
+
+	__rw_start = .;
+
+	.data : { *(.data) }
+
+	__bss_start = .;
+	.bss : { *(.bss) }
+	__bss_end = .;
+
+	. = ALIGN(0x40);
+	.stack : {
+		. += 0x8000;
+		_stack_top = .;
 	}
+
+	__rw_end = .;
 }
-
-/******************************************************** FS ********************************************************/
-/* coreinit.rpl difference in addresses 0xFE3C00 */
