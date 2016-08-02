@@ -279,8 +279,7 @@ void displayMenu(int menuLine)
 // FCE Lifecycle
 void romread(const unsigned char *rom, void *buf, int size, int offset)
 {
-	int readOffset = offset;
-    memcpy(buf, rom + readOffset, size);
+    memcpy(buf, rom + offset, size);
 }
 
 int fce_load_rom(const unsigned char *rom)
